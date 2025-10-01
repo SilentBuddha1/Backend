@@ -1,0 +1,15 @@
+{
+  "name": "sathi",
+  "version": "1.0.0",
+  "description": "Sathi is an online chatting application where users can make friends and communicate in real-time.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Ramchandra Karki",
+  "license": "ISC"
+}

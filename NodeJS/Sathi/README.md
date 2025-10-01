@@ -13,7 +13,7 @@ Sathi is an online chatting application where users can make friends and communi
 
 1. **Clone the repository:**
     ```bash
-    git clone <www.https//github.com/silentbuddha1/backend>
+    git clone www.https//github.com/silentbuddha1/backend
     cd Sathi
     ```
 

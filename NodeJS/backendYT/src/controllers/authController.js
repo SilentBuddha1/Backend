@@ -1,0 +1,76 @@
+import { prisma } from "../config/db.js";
+import bcrypt from "bcryptjs";
+
+const register = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const existingUser = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (existingUser) {
+    return res.status(400).json({
+      error: "User already exists with this email",
+    });
+  }
+
+  // Hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  // Create user
+  const user = await prisma.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+    },
+  });
+
+  return res.status(201).json({
+    status: "success",
+    data: {
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    },
+  });
+};
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  // Find user by email
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  if (!user) {
+    return res
+      .status(401)
+      .json({ error: "Invalid email or password" });
+  }
+
+  // Compare password
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    return res
+      .status(401)
+      .json({ error: "Invalid email or password" });
+  }
+
+  return res.status(200).json({
+    status: "success",
+    data: {
+      user: {
+        id: user.id,
+        email: user.email,
+      },
+    },
+  });
+};
+
+export { register, login };

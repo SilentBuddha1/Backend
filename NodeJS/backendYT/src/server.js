@@ -3,6 +3,7 @@ config(); // Load environment variables from .env file
 import express from 'express';
 import { connectDB, disconnectDB } from "./config/db.js";
 import movieRoutes from "./routes/movieRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 console.log('DEBUG PORT ->', process.env.PORT);
 console.log('DEBUG DATABASE_URL ->', process.env.DATABASE_URL ? '[set]' : '[missing]');
 
@@ -10,8 +11,12 @@ connectDB();
 
 const app = express();
 
+//Body parsing middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+
 app.use("/movies", movieRoutes);
+app.use("/auth", authRoutes);
 
 
 app.get('/', (req,res) => {

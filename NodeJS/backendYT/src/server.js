@@ -4,6 +4,8 @@ import express from 'express';
 import { connectDB, disconnectDB } from "./config/db.js";
 import movieRoutes from "./routes/movieRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import watchlistRoutes from "./routes/watchlistRoutes.js"
+
 console.log('DEBUG PORT ->', process.env.PORT);
 console.log('DEBUG DATABASE_URL ->', process.env.DATABASE_URL ? '[set]' : '[missing]');
 
@@ -17,6 +19,7 @@ app.use(express.urlencoded({ extended: true}));
 
 app.use("/movies", movieRoutes);
 app.use("/auth", authRoutes);
+app.use("/watchlist", watchlistRoutes);
 
 
 app.get('/', (req,res) => {

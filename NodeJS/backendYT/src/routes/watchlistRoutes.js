@@ -8,4 +8,6 @@ router.use(authMiddleware);
 
 router.post("/", addToWatchlist );
 
+router.delete("/:id", removeFromWatchlist);
+
 export default router;
